@@ -6,7 +6,10 @@ const Product = mongoose.model('Product');
 //res: resposta que o servidor dá ao cliente.
 module.exports = {
   async index(req, res) {
-    const products = await Product.find();
+    const { page = 1 } = req.query;
+
+    // const products = await Product.find();
+    const products = await Product.paginate({}, { page, limit: 10 });
     return res.json(products);
   },
 
